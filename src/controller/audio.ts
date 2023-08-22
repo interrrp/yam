@@ -1,5 +1,6 @@
 import Controller from "./controller.ts";
 import downloadAudio from "../core/audio.ts";
+import logger from "../logger.ts";
 
 export default <Controller> {
   path: "/audio",
@@ -10,6 +11,8 @@ export default <Controller> {
       ctx.response.body = { error: "No video ID provided (v query parameter)" };
       return;
     }
+
+    logger.info(`Received request for audio ${videoId}`);
 
     const audioPath = await downloadAudio(videoId);
     ctx.response.headers.set(

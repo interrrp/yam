@@ -3,11 +3,13 @@ import { ffmpeg } from "ffmpeg";
 import { AUDIO_DIR, FFMPEG_DIR } from "../config.ts";
 import downloadVideo from "./video.ts";
 import { fileExists } from "../utils.ts";
+import logger from "../logger.ts";
 
 export default async function downloadAudio(id: string): Promise<string> {
   const path = join(AUDIO_DIR, `${id}.mp3`);
   if (await fileExists(path)) {
     // Audio already exists, no need to download it again
+    logger.info(`Cache hit on audio ${id}`);
     return path;
   }
 

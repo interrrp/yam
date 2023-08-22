@@ -1,5 +1,6 @@
 import Controller from "./controller.ts";
 import downloadVideo from "../core/video.ts";
+import logger from "../logger.ts";
 
 export default <Controller> {
   path: "/video",
@@ -10,6 +11,8 @@ export default <Controller> {
       ctx.response.body = { error: "No video ID provided (v query parameter)" };
       return;
     }
+
+    logger.info(`Received request for video ${videoId}`);
 
     const videoPath = await downloadVideo(videoId);
     ctx.response.headers.set(
