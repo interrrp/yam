@@ -6,6 +6,7 @@
     "ffmpeg": "https://deno.land/x/deno_ffmpeg@v3.1.0/mod.ts"
   },
   "tasks": {
-    "start": "deno run --allow-read --allow-write --allow-env --allow-net --allow-run src/main.ts"
+    "start": "deno run --allow-read --allow-write --allow-env --allow-net --allow-run src/main.ts",
+    "compile": "deno compile --allow-read --allow-write --allow-env --allow-net --allow-run src/main.ts --output build/yam"
   }
 }
