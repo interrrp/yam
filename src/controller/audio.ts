@@ -1,0 +1,21 @@
+import Controller from "./controller.ts";
+import downloadAudio from "../core/audio.ts";
+
+export default <Controller> {
+  path: "/audio",
+  get: async (ctx) => {
+    const videoId = ctx.request.url.searchParams.get("v");
+    if (!videoId) {
+      ctx.response.status = 400;
+      ctx.response.body = { error: "No video ID provided (v query parameter)" };
+      return;
+    }
+
+    const audioPath = await downloadAudio(videoId);
+    ctx.response.headers.set(
+      "Content-Disposition",
+      `inline; filename="${videoId}.mp3"`,
+    );
+    await ctx.send({ root: ".", path: audioPath });
+  },
+};
