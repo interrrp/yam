@@ -1,10 +1,20 @@
 import { Application, Router } from "oak";
 
-import { HOST, PORT } from "./config.ts";
+import { AUDIO_DIR, HOST, PORT, VIDEO_DIR } from "./config.ts";
 import { registerController } from "./controller/controller.ts";
 import videoController from "./controller/video.ts";
 import audioController from "./controller/audio.ts";
 import logger from "./logger.ts";
+import { fileExists } from "./utils.ts";
+
+if (!await fileExists(VIDEO_DIR)) {
+  logger.info("Creating video directory");
+  await Deno.mkdir(VIDEO_DIR);
+}
+if (!await fileExists(AUDIO_DIR)) {
+  logger.info("Creating audio directory");
+  await Deno.mkdir(AUDIO_DIR);
+}
 
 const app = new Application();
 const router = new Router();
