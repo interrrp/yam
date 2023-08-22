@@ -13,8 +13,6 @@ export default <Controller> {
       return;
     }
 
-    logger.info(`Received request for audio ${videoId}`);
-
     const audioPath = await downloadAudio(videoId);
     ctx.response.headers.set(
       "Content-Disposition",

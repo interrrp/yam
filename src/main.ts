@@ -1,11 +1,11 @@
 import { Application, Router } from "oak";
-
 import { AUDIO_DIR, HOST, PORT, VIDEO_DIR } from "./config.ts";
 import { registerController } from "./controller/controller.ts";
 import videoController from "./controller/video.ts";
 import audioController from "./controller/audio.ts";
 import logger from "./logger.ts";
 import { fileExists } from "./utils.ts";
+import requestLogger from "./middleware/req_logger.ts";
 
 if (!await fileExists(VIDEO_DIR)) {
   logger.info("Creating video directory");
@@ -21,6 +21,8 @@ const router = new Router();
 
 registerController(videoController, router);
 registerController(audioController, router);
+
+app.use(requestLogger);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
