@@ -1,5 +1,6 @@
 import Controller from "./controller.ts";
 import downloadVideo from "../core/video.ts";
+import { CACHE } from "../config.ts";
 import logger from "../logger.ts";
 
 export default <Controller> {
@@ -20,5 +21,10 @@ export default <Controller> {
       `inline; filename="${videoId}.mp4"`,
     );
     await ctx.send({ root: ".", path: videoPath });
+
+    if (!CACHE) {
+      logger.info(`Removing video ${videoId}`);
+      await Deno.remove(videoPath);
+    }
   },
 };

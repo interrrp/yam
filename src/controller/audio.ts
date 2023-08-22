@@ -1,5 +1,6 @@
 import Controller from "./controller.ts";
 import downloadAudio from "../core/audio.ts";
+import { CACHE } from "../config.ts";
 import logger from "../logger.ts";
 
 export default <Controller> {
@@ -20,5 +21,10 @@ export default <Controller> {
       `inline; filename="${videoId}.mp3"`,
     );
     await ctx.send({ root: ".", path: audioPath });
+
+    if (!CACHE) {
+      logger.info(`Removing audio ${videoId}`);
+      await Deno.remove(audioPath);
+    }
   },
 };
