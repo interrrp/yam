@@ -2,6 +2,8 @@
 
 > A YouTube video downloader
 
+![deno compatibility](https://shield.deno.dev/deno/^1.36.2)
+
 Yam is a web server that downloads YouTube videos. It can also download videos
 as audio files.
 
