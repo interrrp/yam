@@ -4,7 +4,10 @@ import { VIDEO_DIR } from "../config.ts";
 import { fileExists } from "../utils.ts";
 import logger from "../logger.ts";
 
-export default async function downloadVideo(id: string): Promise<string> {
+export default async function downloadVideo(
+  id: string,
+  highestAudio = false,
+): Promise<string> {
   const path = join(VIDEO_DIR, `${id}.mp4`);
   if (await fileExists(path)) {
     // Video already exists, no need to download it again
@@ -12,7 +15,9 @@ export default async function downloadVideo(id: string): Promise<string> {
     return path;
   }
 
-  const stream = await ytdl(id);
+  const stream = await ytdl(id, {
+    quality: highestAudio ? "highestaudio" : "highest",
+  });
 
   const chunks: Uint8Array[] = [];
   for await (const chunk of stream) {

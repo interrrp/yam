@@ -13,7 +13,7 @@ export default async function downloadAudio(id: string): Promise<string> {
     return path;
   }
 
-  const videoPath = await downloadVideo(id);
+  const videoPath = await downloadVideo(id, true);
 
   await ffmpeg({ ffmpegDir: FFMPEG_DIR })
     .addInput(videoPath)
