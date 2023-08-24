@@ -20,5 +20,7 @@ export default async function downloadAudio(id: string): Promise<string> {
     .noVideo()
     .save(path);
 
+  await Deno.remove(videoPath);
+
   return path;
 }
