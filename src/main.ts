@@ -1,4 +1,5 @@
 import { Application, Router } from "oak";
+import { oakCors } from "cors";
 import { AUDIO_DIR, HOST, PORT, VIDEO_DIR } from "./config.ts";
 import { registerController } from "./controller/controller.ts";
 import videoController from "./controller/video.ts";
@@ -22,10 +23,21 @@ const router = new Router();
 registerController(videoController, router);
 registerController(audioController, router);
 
+app.use(oakCors());
+
 app.use(requestLogger);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+app.use(async (ctx, next) => {
+  await ctx.send({
+    root: `${Deno.cwd()}/public`,
+    index: "index.html",
+  });
+
+  await next();
+});
 
 logger.info(`Listening on http://${HOST}:${PORT}`);
 await app.listen({ hostname: HOST, port: PORT });
