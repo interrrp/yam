@@ -3,7 +3,8 @@
     "std/": "https://deno.land/std@0.198.0/",
     "oak": "https://deno.land/x/oak@v12.6.0/mod.ts",
     "ytdl_core": "https://deno.land/x/ytdl_core@v0.1.2/mod.ts",
-    "ffmpeg": "https://deno.land/x/deno_ffmpeg@v3.1.0/mod.ts"
+    "ffmpeg": "https://deno.land/x/deno_ffmpeg@v3.1.0/mod.ts",
+    "cors": "https://deno.land/x/cors@v1.2.2/mod.ts"
   },
   "tasks": {
     "start": "deno run --allow-read --allow-write --allow-env --allow-net --allow-run src/main.ts",

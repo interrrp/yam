@@ -1,4 +1,5 @@
 import { Application, Router } from "oak";
+import { oakCors } from "cors";
 import { AUDIO_DIR, HOST, PORT, VIDEO_DIR } from "./config.ts";
 import { registerController } from "./controller/controller.ts";
 import videoController from "./controller/video.ts";
@@ -21,6 +22,8 @@ const router = new Router();
 
 registerController(videoController, router);
 registerController(audioController, router);
+
+app.use(oakCors());
 
 app.use(requestLogger);
 
