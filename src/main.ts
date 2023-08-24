@@ -30,5 +30,14 @@ app.use(requestLogger);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
+app.use(async (ctx, next) => {
+  await ctx.send({
+    root: `${Deno.cwd()}/public`,
+    index: "index.html",
+  });
+
+  await next();
+});
+
 logger.info(`Listening on http://${HOST}:${PORT}`);
 await app.listen({ hostname: HOST, port: PORT });
